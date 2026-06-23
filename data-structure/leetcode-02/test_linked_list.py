@@ -18,7 +18,7 @@ class Solution:
         output = ListNode()
         output_ptr = output
 
-        while l1 is not None or l2 is not None:
+        while l1 or l2:
             ge_ten, curr = divmod(
                 (l1.val if l1 else 0) + (l2.val if l2 else 0) + output.val,
                 10,
@@ -29,7 +29,7 @@ class Solution:
             )
 
             output.val = curr
-            if (l1 is not None or l2 is not None) or ge_ten:
+            if (l1 or l2) or ge_ten:
                 output.next = ListNode(val=ge_ten)
                 output = output.next
 
