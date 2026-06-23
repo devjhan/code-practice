@@ -20,19 +20,17 @@ class Solution:
 
         while l1 is not None or l2 is not None:
             ge_ten, curr = divmod(
-                (l1.val if l1 is not None else 0)
-                + (l2.val if l2 is not None else 0)
-                + output.val,
+                (l1.val if l1 else 0) + (l2.val if l2 else 0) + output.val,
                 10,
             )
             l1, l2 = (
-                l1.next if l1 is not None else l1,
-                l2.next if l2 is not None else l2,
+                l1.next if l1 else l1,
+                l2.next if l2 else l2,
             )
 
             output.val = curr
             if (l1 is not None or l2 is not None) or ge_ten:
-                output.next = ListNode(val=int(ge_ten))
+                output.next = ListNode(val=ge_ten)
                 output = output.next
 
         return output_ptr
