@@ -19,26 +19,16 @@ class Solution:
         output_ptr = output
 
         while l1 is not None or l2 is not None:
-            curr, ge_ten = 0, False
-
-            if l1 is None:
-                curr, ge_ten = (
-                    (l2.val + output.val) % 10,
-                    ((l2.val + output.val) // 10 == 1),
-                )
-                l2 = l2.next
-            elif l2 is None:
-                curr, ge_ten = (
-                    (l1.val + output.val) % 10,
-                    ((l1.val + output.val) // 10 == 1),
-                )
-                l1 = l1.next
-            else:
-                curr, ge_ten = (
-                    (l1.val + l2.val + output.val) % 10,
-                    ((l1.val + l2.val + output.val) // 10 == 1),
-                )
-                l1, l2 = l1.next, l2.next
+            ge_ten, curr = divmod(
+                (l1.val if l1 is not None else 0)
+                + (l2.val if l2 is not None else 0)
+                + output.val,
+                10,
+            )
+            l1, l2 = (
+                l1.next if l1 is not None else l1,
+                l2.next if l2 is not None else l2,
+            )
 
             output.val = curr
             if (l1 is not None or l2 is not None) or ge_ten:
