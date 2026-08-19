@@ -65,7 +65,16 @@ LSP 기본 키워드와의 충돌을 방지하기 위해 `algo:` 접두사를 �
 * **`algo:assert-elements`**: `assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);` (순서 무관 중첩 컬렉션 검증)
 
 
-### 3. Java 패키지 및 클래스 작성 규칙
-* Java 파일 상단에는 디렉토리 경로에 맞게 `package leetcode.pXXXX_name;`을 선언합니다.
-* 단일 문제에 복수 풀이 전략이 있는 경우(`MinHeapTest.java`, `QuickSelectTest.java`), 테스트 클래스 내부에 `static class Solution`을 두어 동일 패키지 내 충돌 없이 독립적으로 작성합니다.
+### 3. Java 패키지 및 복수 풀이(전략) 폴더 규칙
+* **단일 풀이**: `problems/<platform>/<p번호_이름>/` 바로 아래에 `*Test.java`를 두고, 상단에 `package leetcode.pXXXX_name;`을 선언합니다.
+* **복수 풀이 (동일 언어)**: 문제 폴더 아래에 `{전략_이름_폴더}`를 두고, 별개 패키지로 분리합니다:
+  ```text
+  problems/leetcode/p0215_kth_largest_element_in_an_array/
+    ├── min_heap/
+    │    └── MinHeapTest.java          # package leetcode.p0215_kth_largest_element_in_an_array.min_heap;
+    └── quick_select/
+         └── QuickSelectTest.java      # package leetcode.p0215_kth_largest_element_in_an_array.quick_select;
+  ```
+  * 각 전략 파일은 독립된 최상위 `class Solution`을 가질 수 있으며 패키지 네임스페이스 격리로 인해 충돌하지 않습니다.
+
 

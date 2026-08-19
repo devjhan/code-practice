@@ -13,23 +13,23 @@
       "import org.junit.jupiter.params.provider.MethodSource;",
       "",
       "class Solution {",
-      "    public ${2:int} ${3:solve}(${4:int[] nums}) {",
+      "    public ${3:int} ${4:solve}(${5:int[] nums}) {",
       "        $0",
-      "        return ${5:0};",
+      "        return ${7:0};",
       "    }",
       "}",
       "",
-      "class ${6:SolutionTest} {",
+      "class ${2:ProblemTest} {",
       "    static Stream<Arguments> cases() {",
       "        return Stream.of(",
-      "            Arguments.of(${7:/* args, expected */})",
+      "            Arguments.of(${6:/* args, expected */})",
       "        );",
       "    }",
       "",
       "    @ParameterizedTest",
       "    @MethodSource(\"cases\")",
-      "    void test(${4:int[] nums}, ${2:int} expected) {",
-      "        assertThat(new Solution().${3:solve}(${8:nums})).isEqualTo(expected);",
+      "    void test(${5:int[] nums}, ${3:int} expected) {",
+      "        assertThat(new Solution().${4:solve}(${8:nums})).isEqualTo(expected);",
       "    }",
       "}"
     ],
@@ -61,4 +61,5 @@
     "description": "AssertJ order-independent nested collection comparison"
   }
 }
+
 

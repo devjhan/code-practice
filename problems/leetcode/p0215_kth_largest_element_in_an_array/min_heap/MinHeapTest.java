@@ -1,4 +1,4 @@
-package leetcode.p0215_kth_largest_element_in_an_array;
+package leetcode.p0215_kth_largest_element_in_an_array.min_heap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,25 +8,25 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class MinHeapTest {
-    static class Solution {
-        public int findKthLargest(int[] nums, int k) {
-            PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
-            for (int i = 0; i < k; ++i) {
-                minHeap.add(nums[i]);
-            }
-
-            for (int i = k; i < nums.length; ++i) {
-                if (minHeap.peek() < nums[i]) {
-                    minHeap.add(nums[i]);
-                    minHeap.poll();
-                }
-            }
-            return minHeap.peek();
+        for (int i = 0; i < k; ++i) {
+            minHeap.add(nums[i]);
         }
-    }
 
+        for (int i = k; i < nums.length; ++i) {
+            if (minHeap.peek() < nums[i]) {
+                minHeap.add(nums[i]);
+                minHeap.poll();
+            }
+        }
+        return minHeap.peek();
+    }
+}
+
+class MinHeapTest {
     static Stream<Arguments> cases() {
         return Stream.of(
                 Arguments.of(new int[] {3, 2, 1, 5, 6, 4}, 2, 5),
