@@ -1,6 +1,6 @@
 {
   "Algorithm Problem Template (AssertJ)": {
-    "prefix": "ps",
+    "prefix": "algo:ps",
     "body": [
       "package ${1:leetcode.p0001_problem_name};",
       "",
@@ -36,7 +36,7 @@
     "description": "Full boilerplate for Java Algorithm Test with AssertJ"
   },
   "Parameterized Test Cases": {
-    "prefix": "cases",
+    "prefix": "algo:cases",
     "body": [
       "static Stream<Arguments> cases() {",
       "    return Stream.of(",
@@ -47,17 +47,18 @@
     "description": "JUnit 5 MethodSource cases"
   },
   "AssertJ Order-Independent Comparison": {
-    "prefix": "assert-order",
+    "prefix": "algo:assert-order",
     "body": [
       "assertThat(${1:actual}).containsExactlyInAnyOrder(${2:expected});"
     ],
     "description": "AssertJ order-independent collection/array comparison"
   },
   "AssertJ Order-Independent Nested Elements": {
-    "prefix": "assert-elements",
+    "prefix": "algo:assert-elements",
     "body": [
       "assertThat(${1:actual}).containsExactlyInAnyOrderElementsOf(${2:expected});"
     ],
     "description": "AssertJ order-independent nested collection comparison"
   }
 }
+

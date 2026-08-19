@@ -1,6 +1,6 @@
 {
   "Algorithm Problem Template": {
-    "prefix": "ps",
+    "prefix": "algo:ps",
     "body": [
       "import pytest",
       "",
@@ -24,7 +24,7 @@
     "description": "Full boilerplate for Python Algorithm Test"
   },
   "Pytest Parametrize Cases": {
-    "prefix": "cases",
+    "prefix": "algo:cases",
     "body": [
       "@pytest.mark.parametrize(",
       "    \"${1:inputs, expected}\",",

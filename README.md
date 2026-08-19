@@ -48,13 +48,22 @@ problems/
 * 파일을 생성하자마자 Zed LSP(JDTLS / Basedpyright)가 즉시 구문 강조, 타입 힌트, 자동완성을 제공합니다.
 
 ### 2. 코드 스니펫 (Zed Snippets)
-에디터에서 `ps`를 입력하고 `Tab`을 누르면 기본 템플릿이 자동 생성됩니다:
-* **Java**: `package leetcode.pXXXX_name;`, `Solution` 클래스, AssertJ `assertThat`, JUnit 5 `@ParameterizedTest` + `cases()` 템플릿 생성
-* **Python**: `Solution` 클래스, `@pytest.mark.parametrize` + `test_solution` 템플릿 생성
-* **단언문 스니펫 (Java)**:
-  * `cases`: `@MethodSource("cases")` 메서드 생성
-  * `assert-order`: `assertThat(actual).containsExactlyInAnyOrder(expected);` (순서 무관 배열/컬렉션 검증)
-  * `assert-elements`: `assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);` (순서 무관 중첩 컬렉션 검증)
+
+Zed의 글로벌 스니펫 디렉토리(`~/.config/zed/snippets/`)로 심볼릭 링크를 연결하여 사용합니다:
+
+```bash
+ln -sf $(pwd)/.zed/snippets/java.json ~/.config/zed/snippets/java.json
+ln -sf $(pwd)/.zed/snippets/python.json ~/.config/zed/snippets/python.json
+```
+
+LSP 기본 키워드와의 충돌을 방지하기 위해 `algo:` 접두사를 사용합니다:
+* **`algo:ps`**:
+  * **Java**: `package leetcode.pXXXX_name;`, `Solution` 클래스, AssertJ `assertThat`, JUnit 5 `@ParameterizedTest` + `cases()` 템플릿 생성
+  * **Python**: `Solution` 클래스, `@pytest.mark.parametrize` + `test_solution` 템플릿 생성
+* **`algo:cases`**: `@MethodSource("cases")` (Java) / `@pytest.mark.parametrize` (Python) 케이스 생성
+* **`algo:assert-order`**: `assertThat(actual).containsExactlyInAnyOrder(expected);` (순서 무관 배열/컬렉션 검증)
+* **`algo:assert-elements`**: `assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);` (순서 무관 중첩 컬렉션 검증)
+
 
 ### 3. Java 패키지 및 클래스 작성 규칙
 * Java 파일 상단에는 디렉토리 경로에 맞게 `package leetcode.pXXXX_name;`을 선언합니다.
