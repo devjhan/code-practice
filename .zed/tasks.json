@@ -1,6 +1,24 @@
 [
   {
-    "label": "Test: Current File",
+    "label": "LeetCode: Scaffold from Clipboard",
+    "command": "python3",
+    "args": ["scripts/scaffold.py", "clipboard", "$ZED_FILE"],
+    "save": "current",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always"
+  },
+  {
+    "label": "LeetCode: Generate Test from Solution",
+    "command": "python3",
+    "args": ["scripts/scaffold.py", "file", "$ZED_FILE"],
+    "save": "current",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always"
+  },
+  {
+    "label": "LeetCode: Test Current File",
     "command": "python3",
     "args": ["scripts/test_runner.py", "$ZED_FILE"],
     "save": "current",
@@ -9,7 +27,7 @@
     "reveal": "always"
   },
   {
-    "label": "Test: All (Java & Python)",
+    "label": "LeetCode: Test All (Java & Python)",
     "command": "make",
     "args": ["test"],
     "use_new_terminal": false,
@@ -17,7 +35,7 @@
     "reveal": "always"
   },
   {
-    "label": "Test: All Java",
+    "label": "LeetCode: Test All Java",
     "command": "./gradlew",
     "args": ["test"],
     "use_new_terminal": false,
@@ -25,7 +43,7 @@
     "reveal": "always"
   },
   {
-    "label": "Test: All Python",
+    "label": "LeetCode: Test All Python",
     "command": ".venv/bin/pytest",
     "args": ["-v"],
     "use_new_terminal": false,
@@ -33,4 +51,5 @@
     "reveal": "always"
   }
 ]
+
 

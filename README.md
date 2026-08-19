@@ -24,11 +24,19 @@ make test-java    # Java 전체 테스트
 ```
 
 ### 2. Zed Tasks 단축키 (`Cmd + Shift + R` / `task: spawn`)
-Zed 에디터에서 `Cmd + Shift + R`을 누르고 태스크를 선택하거나 재실행할 수 있습니다:
-* **`Test: Current File`**: 현재 열려있는 파일(`.java` 또는 `.py`)의 테스트만 격리 실행
-* **`Test: All (Java & Python)`**: 전체 테스트 실행
-* **`Test: All Java`**: Java 전체 테스트 실행
-* **`Test: All Python`**: Python 전체 테스트 실행
+Zed 에디터에서 `Cmd + Shift + R`을 누르고 LeetCode 태스크를 즉시 실행할 수 있습니다:
+
+#### 1) 문제 스캐폴딩 및 자동 생성 (LeetCode 전용)
+* **`LeetCode: Scaffold from Clipboard`**:
+  * LeetCode 웹에서 복사(`Cmd + C`)한 `class Solution` 코드로부터 **패키지명, 테스트 클래스명, 파라미터 시그니처, 최적 AssertJ 단언문(`containsExactlyInAnyOrderElementsOf`, `isEqualTo` 등)**을 100% 자동 추론하여 현재 파일에 생성합니다.
+* **`LeetCode: Generate Test from Solution`**:
+  * 현재 파일에 작성/붙여넣기된 `class Solution` 코드를 분석하여 하단에 파라미터화 테스트 클래스를 자동 생성합니다.
+
+#### 2) 테스트 실행 태스크
+* **`LeetCode: Test Current File`**: 현재 열려있는 파일(`.java` 또는 `.py`)의 테스트만 격리 실행
+* **`LeetCode: Test All (Java & Python)`**: 전체 테스트 실행 (`make test`)
+* **`LeetCode: Test All Java`**: Java 전체 테스트 실행 (`./gradlew test`)
+* **`LeetCode: Test All Python`**: Python 전체 테스트 실행 (`.venv/bin/pytest -v`)
 
 ## 문제 추가 규칙 (0-Step Setup)
 
@@ -47,22 +55,19 @@ problems/
 * 별도의 `build.gradle.kts` 생성, `settings.gradle.kts` 수정, Gradle 동기화 절차가 **전혀 필요 없습니다**.
 * 파일을 생성하자마자 Zed LSP(JDTLS / Basedpyright)가 즉시 구문 강조, 타입 힌트, 자동완성을 제공합니다.
 
-### 2. 코드 스니펫 (Zed Snippets)
+### 2. 보조 코드 스니펫 (Zed Snippets)
 
-Zed의 글로벌 스니펫 디렉토리(`~/.config/zed/snippets/`)로 심볼릭 링크를 연결하여 사용합니다:
+스니펫 보조 도구가 필요한 경우 글로벌 디렉토리에 연결하여 사용합니다:
 
 ```bash
 ln -sf $(pwd)/.zed/snippets/java.json ~/.config/zed/snippets/java.json
 ln -sf $(pwd)/.zed/snippets/python.json ~/.config/zed/snippets/python.json
 ```
 
-LSP 기본 키워드와의 충돌을 방지하기 위해 `algo:` 접두사를 사용합니다:
-* **`algo:ps`**:
-  * **Java**: `package leetcode.pXXXX_name;`, `Solution` 클래스, AssertJ `assertThat`, JUnit 5 `@ParameterizedTest` + `cases()` 템플릿 생성
-  * **Python**: `Solution` 클래스, `@pytest.mark.parametrize` + `test_solution` 템플릿 생성
-* **`algo:cases`**: `@MethodSource("cases")` (Java) / `@pytest.mark.parametrize` (Python) 케이스 생성
+* **`algo:cases`**: `@MethodSource("cases")` (Java) / `@pytest.mark.parametrize` (Python) 케이스 메서드 생성
 * **`algo:assert-order`**: `assertThat(actual).containsExactlyInAnyOrder(expected);` (순서 무관 배열/컬렉션 검증)
 * **`algo:assert-elements`**: `assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);` (순서 무관 중첩 컬렉션 검증)
+
 
 
 ### 3. Java 패키지 및 복수 풀이(전략) 폴더 규칙

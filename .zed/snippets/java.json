@@ -1,40 +1,4 @@
 {
-  "Algorithm Problem Template (AssertJ)": {
-    "prefix": "algo:ps",
-    "body": [
-      "package ${1:leetcode.p0001_problem_name};",
-      "",
-      "import static org.assertj.core.api.Assertions.assertThat;",
-      "",
-      "import java.util.*;",
-      "import java.util.stream.Stream;",
-      "import org.junit.jupiter.params.ParameterizedTest;",
-      "import org.junit.jupiter.params.provider.Arguments;",
-      "import org.junit.jupiter.params.provider.MethodSource;",
-      "",
-      "class Solution {",
-      "    public ${3:int} ${4:solve}(${5:int[] nums}) {",
-      "        $0",
-      "        return ${7:0};",
-      "    }",
-      "}",
-      "",
-      "class ${2:ProblemTest} {",
-      "    static Stream<Arguments> cases() {",
-      "        return Stream.of(",
-      "            Arguments.of(${6:/* args, expected */})",
-      "        );",
-      "    }",
-      "",
-      "    @ParameterizedTest",
-      "    @MethodSource(\"cases\")",
-      "    void test(${5:int[] nums}, ${3:int} expected) {",
-      "        assertThat(new Solution().${4:solve}(${8:nums})).isEqualTo(expected);",
-      "    }",
-      "}"
-    ],
-    "description": "Full boilerplate for Java Algorithm Test with AssertJ"
-  },
   "Parameterized Test Cases": {
     "prefix": "algo:cases",
     "body": [
@@ -61,5 +25,6 @@
     "description": "AssertJ order-independent nested collection comparison"
   }
 }
+
 
 

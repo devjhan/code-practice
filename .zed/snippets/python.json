@@ -1,28 +1,4 @@
 {
-  "Algorithm Problem Template": {
-    "prefix": "algo:ps",
-    "body": [
-      "import pytest",
-      "",
-      "",
-      "class Solution:",
-      "    def ${1:solve}(self, ${2:nums: list[int]}) -> ${3:int}:",
-      "        $0",
-      "        pass",
-      "",
-      "",
-      "@pytest.mark.parametrize(",
-      "    \"${4:nums, expected}\",",
-      "    [",
-      "        (${5:/* case 1 */}),",
-      "    ],",
-      ")",
-      "def test_solution(${4:nums, expected}):",
-      "    assert Solution().${1:solve}(${6:nums}) == expected",
-      ""
-    ],
-    "description": "Full boilerplate for Python Algorithm Test"
-  },
   "Pytest Parametrize Cases": {
     "prefix": "algo:cases",
     "body": [
