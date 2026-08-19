@@ -12,6 +12,13 @@ def get_clipboard_text() -> str:
         print(f"Error reading clipboard: {e}", file=sys.stderr)
         return ""
 
+def to_pascal_case(s: str) -> str:
+    parts = re.split(r"[-_]", s)
+    res = "".join(p[:1].upper() + p[1:] for p in parts if p)
+    if not res.endswith("Test") and res != "Solution":
+        res += "Test"
+    return res
+
 def calculate_java_package(file_path: Path) -> str:
     try:
         problems_idx = file_path.parts.index("problems")
@@ -59,7 +66,7 @@ def parse_java_solution(code: str):
 
 def generate_java_scaffold(file_path: Path, parsed: dict) -> str:
     package_name = calculate_java_package(file_path)
-    class_name = file_path.stem
+    class_name = to_pascal_case(file_path.stem)
     
     return_type = parsed["return_type"]
     method_name = parsed["method_name"]
