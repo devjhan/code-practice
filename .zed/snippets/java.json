@@ -1,0 +1,63 @@
+{
+  "Algorithm Problem Template (AssertJ)": {
+    "prefix": "ps",
+    "body": [
+      "package ${1:leetcode.p0001_problem_name};",
+      "",
+      "import static org.assertj.core.api.Assertions.assertThat;",
+      "",
+      "import java.util.*;",
+      "import java.util.stream.Stream;",
+      "import org.junit.jupiter.params.ParameterizedTest;",
+      "import org.junit.jupiter.params.provider.Arguments;",
+      "import org.junit.jupiter.params.provider.MethodSource;",
+      "",
+      "class Solution {",
+      "    public ${2:int} ${3:solve}(${4:int[] nums}) {",
+      "        $0",
+      "        return ${5:0};",
+      "    }",
+      "}",
+      "",
+      "class ${6:SolutionTest} {",
+      "    static Stream<Arguments> cases() {",
+      "        return Stream.of(",
+      "            Arguments.of(${7:/* args, expected */})",
+      "        );",
+      "    }",
+      "",
+      "    @ParameterizedTest",
+      "    @MethodSource(\"cases\")",
+      "    void test(${4:int[] nums}, ${2:int} expected) {",
+      "        assertThat(new Solution().${3:solve}(${8:nums})).isEqualTo(expected);",
+      "    }",
+      "}"
+    ],
+    "description": "Full boilerplate for Java Algorithm Test with AssertJ"
+  },
+  "Parameterized Test Cases": {
+    "prefix": "cases",
+    "body": [
+      "static Stream<Arguments> cases() {",
+      "    return Stream.of(",
+      "        Arguments.of($1)",
+      "    );",
+      "}"
+    ],
+    "description": "JUnit 5 MethodSource cases"
+  },
+  "AssertJ Order-Independent Comparison": {
+    "prefix": "assert-order",
+    "body": [
+      "assertThat(${1:actual}).containsExactlyInAnyOrder(${2:expected});"
+    ],
+    "description": "AssertJ order-independent collection/array comparison"
+  },
+  "AssertJ Order-Independent Nested Elements": {
+    "prefix": "assert-elements",
+    "body": [
+      "assertThat(${1:actual}).containsExactlyInAnyOrderElementsOf(${2:expected});"
+    ],
+    "description": "AssertJ order-independent nested collection comparison"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "lsp": {
+    "jdtls": {
+      "settings": {
+        "initialization_options": {
+          "settings": {
+            "java": {
+              "configuration": {
+                "updateBuildConfiguration": "automatic"
+              },
+              "import": {
+                "gradle": {
+                  "enabled": true
+                }
+              },
+              "autobuild": {
+                "enabled": true
+              },
+              "completion": {
+                "favoriteStaticMembers": [
+                  "org.assertj.core.api.Assertions.assertThat",
+                  "org.assertj.core.api.Assertions.assertThatThrownBy",
+                  "org.junit.jupiter.api.Assertions.*",
+                  "org.junit.jupiter.params.provider.Arguments.arguments"
+                ],
+                "importOrder": ["java", "javax", "org", "com", ""]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "languages": {
+    "Python": {
+      "formatter": {
+        "language_server": {
+          "name": "ruff"
+        }
+      },
+      "code_actions_on_format": {
+        "source.organizeImports.ruff": true
+      }
+    }
+  }
+}
+

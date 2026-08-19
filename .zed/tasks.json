@@ -1,0 +1,36 @@
+[
+  {
+    "label": "Test: Current File",
+    "command": "python3",
+    "args": ["scripts/test_runner.py", "$ZED_FILE"],
+    "save": "current",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "always"
+  },
+  {
+    "label": "Test: All (Java & Python)",
+    "command": "make",
+    "args": ["test"],
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "always"
+  },
+  {
+    "label": "Test: All Java",
+    "command": "./gradlew",
+    "args": ["test"],
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "always"
+  },
+  {
+    "label": "Test: All Python",
+    "command": ".venv/bin/pytest",
+    "args": ["-v"],
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "always"
+  }
+]
+
