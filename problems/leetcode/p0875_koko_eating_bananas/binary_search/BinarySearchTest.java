@@ -1,4 +1,4 @@
-package leetcode.p0875_koko_eating_bananas;
+package leetcode.p0875_koko_eating_bananas.binary_search;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

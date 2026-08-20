@@ -72,13 +72,11 @@ class PlatformEnv:
     @staticmethod
     def calculate_java_package(file_path: Path) -> str:
         try:
-            problems_idx = file_path.parts.index("problems")
-            pkg_parts = file_path.parts[problems_idx + 1 : -1]
-            if pkg_parts:
-                return ".".join(pkg_parts)
+            problems_dir = PlatformEnv.get_repo_root() / "problems"
+            rel_dir = file_path.resolve().parent.relative_to(problems_dir)
+            return ".".join(rel_dir.parts)
         except ValueError:
-            pass
-        return "leetcode"
+            return "leetcode"
 
     @staticmethod
     def to_pascal_case(s: str) -> str:

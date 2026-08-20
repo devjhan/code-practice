@@ -19,7 +19,7 @@ def run_java_tests(root: Path, test_filter: str = None) -> int:
     cmd = list(PlatformEnv.get_gradle_command())
     cmd.append("test")
     if test_filter:
-        cmd.extend(["--tests", f"*{test_filter}*"])
+        cmd.extend(["--tests", test_filter])
     print(f"==> Running Java tests: {' '.join(cmd)}")
     return subprocess.call(cmd, cwd=root)
 
@@ -51,8 +51,10 @@ def main() -> int:
     if target_path.suffix == ".py":
         return run_python_tests(root, str(target_path))
     elif target_path.suffix == ".java":
-        class_name = PlatformEnv.to_pascal_case(target_path.stem)
-        return run_java_tests(root, class_name)
+        pkg = PlatformEnv.calculate_java_package(target_path)
+        cls_name = PlatformEnv.to_pascal_case(target_path.stem)
+        fqcn = f"{pkg}.{cls_name}"
+        return run_java_tests(root, fqcn)
     else:
         print(f"[test_runner] Not a test file: {target}")
         print("[test_runner] Running all tests instead...")

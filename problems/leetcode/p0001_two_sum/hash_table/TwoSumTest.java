@@ -1,4 +1,4 @@
-package leetcode.p0001_two_sum;
+package leetcode.p0001_two_sum.hash_table;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

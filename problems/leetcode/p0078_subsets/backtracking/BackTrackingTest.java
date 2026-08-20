@@ -1,4 +1,4 @@
-package leetcode.p0078_subsets;
+package leetcode.p0078_subsets.backtracking;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

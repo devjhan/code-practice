@@ -1,4 +1,4 @@
-package leetcode.p0560_subarray_sum_equals_k;
+package leetcode.p0560_subarray_sum_equals_k.prefix_sum;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

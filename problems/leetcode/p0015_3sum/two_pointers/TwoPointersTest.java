@@ -1,4 +1,4 @@
-package leetcode.p0015_3sum;
+package leetcode.p0015_3sum.two_pointers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

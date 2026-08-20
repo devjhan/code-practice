@@ -1,4 +1,4 @@
-package leetcode.p0347_top_k_frequent_elements;
+package leetcode.p0347_top_k_frequent_elements.array_dictionary;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

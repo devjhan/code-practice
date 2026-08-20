@@ -174,7 +174,7 @@ def generate_python_scaffold(file_path: Path, parsed: dict) -> str:
 @pytest.mark.parametrize(
     "{test_params_str}",
     [
-        (/* case 1 */),
+        # case 1: ({', '.join(param_names)}, expected)
     ],
 )
 def test_{method_name}({test_params_str}):

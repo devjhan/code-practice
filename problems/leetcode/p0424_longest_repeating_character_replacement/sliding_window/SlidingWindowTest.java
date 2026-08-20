@@ -1,4 +1,4 @@
-package leetcode.p0424_longest_repeating_character_replacement;
+package leetcode.p0424_longest_repeating_character_replacement.sliding_window;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

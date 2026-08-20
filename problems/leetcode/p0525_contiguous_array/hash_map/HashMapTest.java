@@ -1,4 +1,4 @@
-package leetcode.p0525_contiguous_array;
+package leetcode.p0525_contiguous_array.hash_map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

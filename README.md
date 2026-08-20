@@ -65,9 +65,15 @@ Zed 에디터에서 `Cmd + Shift + R`을 누르고 LeetCode 태스크를 즉시 
 problems/
   leetcode/
     p0001_two_sum/
-      TwoSumTest.java
+      hash_table/
+        TwoSumTest.java
       test_hashtable.py
       test_bruteforce.py
+    p0215_kth_largest_element_in_an_array/
+      min_heap/
+        MinHeapTest.java
+      quick_select/
+        QuickSelectTest.java
 ```
 
 ### 1. Zero-Step LSP 지원
@@ -87,23 +93,21 @@ problems/
   New-Item -ItemType SymbolicLink -Path "$env:APPDATA\Zed\snippets\python.json" -Target "$PWD\.zed\snippets\python.json" -Force
   ```
 
-
 * **`algo:cases`**: `@MethodSource("cases")` (Java) / `@pytest.mark.parametrize` (Python) 케이스 메서드 생성
 * **`algo:assert-order`**: `assertThat(actual).containsExactlyInAnyOrder(expected);` (순서 무관 배열/컬렉션 검증)
 * **`algo:assert-elements`**: `assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);` (순서 무관 중첩 컬렉션 검증)
 
-
-
-### 3. Java 패키지 및 복수 풀이(전략) 폴더 규칙
-* **단일 풀이**: `problems/<platform>/<p번호_이름>/` 바로 아래에 `*Test.java`를 두고, 상단에 `package leetcode.pXXXX_name;`을 선언합니다.
-* **복수 풀이 (동일 언어)**: 문제 폴더 아래에 `{전략_이름_폴더}`를 두고, 별개 패키지로 분리합니다:
+### 3. Java 풀이 전략 폴더 및 패키지 규칙
+* **단일/복수 풀이 공통 규칙**: 모든 Java 풀이는 항상 문제 폴더 아래의 `{전략_이름_폴더}`에 배치합니다:
   ```text
-  problems/leetcode/p0215_kth_largest_element_in_an_array/
-    ├── min_heap/
-    │    └── MinHeapTest.java          # package leetcode.p0215_kth_largest_element_in_an_array.min_heap;
-    └── quick_select/
-         └── QuickSelectTest.java      # package leetcode.p0215_kth_largest_element_in_an_array.quick_select;
+  problems/leetcode/p0001_two_sum/hash_table/TwoSumTest.java
+  ➔ package leetcode.p0001_two_sum.hash_table;
+
+  problems/leetcode/p0215_kth_largest_element_in_an_array/min_heap/MinHeapTest.java
+  ➔ package leetcode.p0215_kth_largest_element_in_an_array.min_heap;
   ```
-  * 각 전략 파일은 독립된 최상위 `class Solution`을 가질 수 있으며 패키지 네임스페이스 격리로 인해 충돌하지 않습니다.
+* 각 전략 파일은 독립된 최상위 `class Solution`을 가질 수 있으며 패키지 네임스페이스 격리로 인해 충돌하지 않습니다.
+* 단일 파일 테스트 실행 시 FQCN(전체 패키지명)으로 전달되어, 동일한 테스트 클래스명을 가진 다른 문제와 완벽히 격리되어 실행됩니다.
+
 
 

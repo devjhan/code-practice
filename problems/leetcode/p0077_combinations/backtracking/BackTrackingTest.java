@@ -1,4 +1,4 @@
-package leetcode.p0077_combinations;
+package leetcode.p0077_combinations.backtracking;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
