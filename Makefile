@@ -1,15 +1,13 @@
-PYTHON ?= .venv/bin/python
+PYTHON ?= $(shell python3 -c "import sys; print(sys.executable)" 2>/dev/null || python -c "import sys; print(sys.executable)")
 
 .PHONY: test test-python test-java
 
 test:
-	@status=0; \
-	$(MAKE) --no-print-directory test-python || status=1; \
-	$(MAKE) --no-print-directory test-java || status=1; \
-	exit $$status
+	$(PYTHON) scripts/test_runner.py --all
 
 test-python:
-	$(PYTHON) -m pytest
+	$(PYTHON) scripts/test_runner.py --python
 
 test-java:
-	./gradlew test
+	$(PYTHON) scripts/test_runner.py --java
+

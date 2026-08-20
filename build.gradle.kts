@@ -30,8 +30,10 @@ tasks.withType<JavaCompile>().configureEach {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+    systemProperty("file.encoding", "UTF-8")
     testLogging {
         events("passed", "skipped", "failed")
     }
 }
+
 

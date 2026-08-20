@@ -2,32 +2,11 @@
 import sys
 import os
 import re
-import subprocess
 from pathlib import Path
 
-def get_clipboard_text() -> str:
-    try:
-        return subprocess.check_output(["pbpaste"], text=True)
-    except Exception as e:
-        print(f"Error reading clipboard: {e}", file=sys.stderr)
-        return ""
-
-def to_pascal_case(s: str) -> str:
-    parts = re.split(r"[-_]", s)
-    res = "".join(p[:1].upper() + p[1:] for p in parts if p)
-    if not res.endswith("Test") and res != "Solution":
-        res += "Test"
-    return res
-
-def calculate_java_package(file_path: Path) -> str:
-    try:
-        problems_idx = file_path.parts.index("problems")
-        pkg_parts = file_path.parts[problems_idx + 1 : -1]
-        if pkg_parts:
-            return ".".join(pkg_parts)
-    except ValueError:
-        pass
-    return "leetcode"
+# Add scripts directory to path to import platform_env
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from platform_env import PlatformEnv
 
 def parse_java_solution(code: str):
     method_pattern = re.compile(
@@ -65,8 +44,8 @@ def parse_java_solution(code: str):
     }
 
 def generate_java_scaffold(file_path: Path, parsed: dict) -> str:
-    package_name = calculate_java_package(file_path)
-    class_name = to_pascal_case(file_path.stem)
+    package_name = PlatformEnv.calculate_java_package(file_path)
+    class_name = PlatformEnv.to_pascal_case(file_path.stem)
     
     return_type = parsed["return_type"]
     method_name = parsed["method_name"]
@@ -218,7 +197,7 @@ def main():
         sys.exit(1)
 
     if mode == "clipboard":
-        code = get_clipboard_text()
+        code = PlatformEnv.get_clipboard_text()
         if not code.strip():
             print("Clipboard is empty!", file=sys.stderr)
             sys.exit(1)

@@ -4,24 +4,43 @@
 
 ## 준비
 
-Python 테스트는 가상환경에 의존합니다.
+### 1. Python 가상환경 구성
+* **macOS / Linux**:
+  ```bash
+  python3 -m venv .venv
+  .venv/bin/pip install -r requirements.txt
+  ```
+* **Windows (PowerShell)**:
+  ```powershell
+  python -m venv .venv
+  .\.venv\Scripts\pip.exe install -r requirements.txt
+  ```
 
-```bash
-python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt
-```
-
-Java 테스트는 Gradle Wrapper와 JDK 17 이상을 사용하며, AssertJ 및 JUnit 5 기반으로 검증됩니다.
+### 2. Java 개발 환경
+* Gradle Wrapper와 JDK 17 이상을 사용하며, AssertJ 및 JUnit 5 기반으로 검증됩니다.
+* Windows와 macOS/Linux 모두 별도 설치 없이 번들된 Gradle Wrapper(`gradlew` / `gradlew.bat`)로 자동 구동됩니다.
 
 ## 테스트 실행
 
 ### 1. CLI 테스트 실행
-```bash
-make test         # Python + Java 전체 테스트
-make test-python  # Python 전체 테스트
-make test-java    # Java 전체 테스트
-./gradlew test    # Gradle Java 테스트
-```
+* **공통 (OS 무관)**:
+  ```bash
+  python scripts/test_runner.py --all      # 전체 테스트 (Python + Java)
+  python scripts/test_runner.py --python   # Python 전체 테스트
+  python scripts/test_runner.py --java     # Java 전체 테스트
+  ```
+* **macOS / Linux (Make / Gradle)**:
+  ```bash
+  make test         # 전체 테스트
+  make test-python  # Python 전체 테스트
+  make test-java    # Java 전체 테스트
+  ./gradlew test    # Gradle Java 테스트
+  ```
+* **Windows (Gradle Batch)**:
+  ```powershell
+  .\gradlew.bat test  # Gradle Java 테스트
+  ```
+
 
 ### 2. Zed Tasks 단축키 (`Cmd + Shift + R` / `task: spawn`)
 Zed 에디터에서 `Cmd + Shift + R`을 누르고 LeetCode 태스크를 즉시 실행할 수 있습니다:
@@ -57,12 +76,17 @@ problems/
 
 ### 2. 보조 코드 스니펫 (Zed Snippets)
 
-스니펫 보조 도구가 필요한 경우 글로벌 디렉토리에 연결하여 사용합니다:
+* **macOS / Linux**:
+  ```bash
+  ln -sf $(pwd)/.zed/snippets/java.json ~/.config/zed/snippets/java.json
+  ln -sf $(pwd)/.zed/snippets/python.json ~/.config/zed/snippets/python.json
+  ```
+* **Windows (PowerShell)**:
+  ```powershell
+  New-Item -ItemType SymbolicLink -Path "$env:APPDATA\Zed\snippets\java.json" -Target "$PWD\.zed\snippets\java.json" -Force
+  New-Item -ItemType SymbolicLink -Path "$env:APPDATA\Zed\snippets\python.json" -Target "$PWD\.zed\snippets\python.json" -Force
+  ```
 
-```bash
-ln -sf $(pwd)/.zed/snippets/java.json ~/.config/zed/snippets/java.json
-ln -sf $(pwd)/.zed/snippets/python.json ~/.config/zed/snippets/python.json
-```
 
 * **`algo:cases`**: `@MethodSource("cases")` (Java) / `@pytest.mark.parametrize` (Python) 케이스 메서드 생성
 * **`algo:assert-order`**: `assertThat(actual).containsExactlyInAnyOrder(expected);` (순서 무관 배열/컬렉션 검증)
