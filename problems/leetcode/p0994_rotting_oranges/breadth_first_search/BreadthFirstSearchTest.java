@@ -1,4 +1,4 @@
-package leetcode.p994_rotting_oranges.breadth_first_search;
+package leetcode.p0994_rotting_oranges.breadth_first_search;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

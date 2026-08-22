@@ -36,4 +36,12 @@ tasks.withType<Test>().configureEach {
     }
 }
 
-
+tasks.test {
+    testLogging {
+        events("failed") // 실패한 테스트 이벤트 감지
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL // 전체 스택 트레이스 출력
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+    }
+}
