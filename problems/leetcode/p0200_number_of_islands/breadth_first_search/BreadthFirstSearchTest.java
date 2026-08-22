@@ -10,45 +10,38 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class Solution {
     private static final int[][] deltas = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    private static final char WATER = '0';
     private static final char GROUND = '1';
     private static final char CHECKED_GROUND = '2';
-    private static final Integer[] NO_MORE_ISLANDS = new Integer[]{-1, -1};
-
-    private static Integer[] moreIslands(char[][] grid) {
-        for (int i = 0; i < grid.length; ++i) {
-            for (int j = 0; j < grid[i].length; ++j) {
-                if (grid[i][j] == GROUND) {
-                    return new Integer[] {i, j};
-                }
-            }
-        }
-        return new Integer[]{-1, -1};
-    }
 
     public int numIslands(char[][] grid) {
         Deque<Integer[]> queue = new ArrayDeque<>();
-
         int islandCount = 0;
-        Integer[] nextGround = new Integer[2];
 
-        while (!Arrays.equals((nextGround = moreIslands(grid)), NO_MORE_ISLANDS)){
-            grid[nextGround[0]][nextGround[1]] = CHECKED_GROUND;
-            queue.offer(nextGround);
-            ++islandCount;
-
-            while (!queue.isEmpty()) {
-                Integer[] position = queue.poll();
-
-                for (int[] delta: deltas) {
-                    int ni = position[0] + delta[0], nj = position[1] + delta[1];
-
-                    if (ni < 0 || ni >= grid.length || nj < 0 || nj >= grid[ni].length) {
-                        continue;
+        for (int i = 0; i < grid.length; ++i) {
+            for (int j = 0; j < grid[i].length; ++j) {
+                if (grid[i][j] != WATER) {
+                    if (grid[i][j] == GROUND) {
+                        grid[i][j] = CHECKED_GROUND;
+                        ++islandCount;
                     }
+                    queue.offer(new Integer[]{i, j});
 
-                    if (grid[ni][nj] == GROUND) {
-                        grid[ni][nj] = CHECKED_GROUND;
-                        queue.offer(new Integer[] {ni, nj});
+                    while (!queue.isEmpty()) {
+                        Integer[] pos = queue.poll();
+
+                        for (int[] delta: deltas) {
+                            int ni = pos[0] + delta[0], nj = pos[1] + delta[1];
+
+                            if (ni < 0 || ni >= grid.length || nj < 0 || nj >= grid[ni].length) {
+                                continue;
+                            }
+
+                            if (grid[ni][nj] == GROUND) {
+                                grid[ni][nj] = CHECKED_GROUND;
+                                queue.offer(new Integer[]{ni, nj});
+                            }
+                        }
                     }
                 }
             }
