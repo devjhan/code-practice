@@ -10,7 +10,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class Solution {
     private static final int[][] deltas = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-    private static final char WATER = '0';
     private static final char GROUND = '1';
     private static final char CHECKED_GROUND = '2';
 
