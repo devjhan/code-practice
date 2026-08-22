@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class Solution {
     private static record Coordinate(int i, int j){}
+    final int[][] deltas = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public int orangesRotting(int[][] grid) {
         int freshOrangesCount = 0;
@@ -33,34 +34,16 @@ class Solution {
             for (int i = 0; i < size; ++i) {
                 Coordinate pos = rottenOrangesQueue.poll();
 
-                if (pos.i() - 1 >= 0) {
-                    if (grid[pos.i() - 1][pos.j()] == 1) {
-                        rottenOrangesQueue.offerLast(new Coordinate(pos.i() - 1, pos.j()));
-                        grid[pos.i() - 1][pos.j()] = 2;
-                        --freshOrangesCount;
-                    }
-                }
+                for (int[] delta: deltas) {
+                    Coordinate nextCoordinate = new Coordinate(pos.i() + delta[0], pos.j() + delta[1]);
 
-                if (pos.i() + 1 <= grid.length - 1) {
-                    if (grid[pos.i() + 1][pos.j()] == 1) {
-                        rottenOrangesQueue.offerLast(new Coordinate(pos.i() + 1, pos.j()));
-                        grid[pos.i() + 1][pos.j()] = 2;
-                        --freshOrangesCount;
+                    if (nextCoordinate.i() < 0 || nextCoordinate.i() >= grid.length || nextCoordinate.j() < 0 || nextCoordinate.j() >= grid[nextCoordinate.i()].length) {
+                        continue;
                     }
-                }
 
-                if (pos.j() - 1 >= 0) {
-                    if (grid[pos.i()][pos.j() - 1] == 1) {
-                        rottenOrangesQueue.offerLast(new Coordinate(pos.i(), pos.j() - 1));
-                        grid[pos.i()][pos.j() - 1] = 2;
-                        --freshOrangesCount;
-                    }
-                }
-
-                if (pos.j() + 1 <= grid[pos.i()].length - 1) {
-                    if (grid[pos.i()][pos.j() + 1] == 1) {
-                        rottenOrangesQueue.offerLast(new Coordinate(pos.i(), pos.j() + 1));
-                        grid[pos.i()][pos.j() + 1] = 2;
+                    if (grid[nextCoordinate.i()][nextCoordinate.j()] == 1) {
+                        rottenOrangesQueue.offerLast(nextCoordinate);
+                        grid[nextCoordinate.i()][nextCoordinate.j()] = 2;
                         --freshOrangesCount;
                     }
                 }
