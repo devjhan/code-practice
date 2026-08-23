@@ -31,6 +31,10 @@ class Solution {
         while(!pq.isEmpty()) {
             Edge via = pq.poll();
 
+            if (via.cost() > dist[via.vertex()]) {
+                continue;
+            }
+
             for (Edge to: adjList[via.vertex()]) {
                 int nextCost = via.cost() + to.cost();
 
