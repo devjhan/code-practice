@@ -25,19 +25,12 @@ class Solution {
             int[] curr = q.removeFirst();
             int i = curr[0], j = curr[1];
 
-            int[] dir = Arrays.stream(deltas).filter(t -> t[0] == grid[i][j]).findAny().get();
-
-            if (i + dir[1] >= 0 && i + dir[1] < grid.length && j + dir[2] >= 0 && j + dir[2] < grid[0].length) {
-                if (dist[i + dir[1]][j + dir[2]] > dist[i][j]) {
-                    dist[i + dir[1]][j + dir[2]] = dist[i][j];
-                    q.addFirst(new int[]{i + dir[1], j + dir[2]});
-                }
-            }
+            int[] noCostDirection = Arrays.stream(deltas).filter(t -> t[0] == grid[i][j]).findAny().get();
 
             for (int[] delta: deltas) {
                 if (i + delta[1] >= 0 && i + delta[1] < grid.length && j + delta[2] >= 0 && j + delta[2] < grid[0].length) {
-                    if (dist[i + delta[1]][j + delta[2]] > dist[i][j] + 1) {
-                        dist[i + delta[1]][j + delta[2]] = dist[i][j] + 1;
+                    if (dist[i + delta[1]][j + delta[2]] > dist[i][j] + ((delta[0] == noCostDirection[0]) ? 0 : 1)) {
+                        dist[i + delta[1]][j + delta[2]] = dist[i][j] + ((delta[0] == noCostDirection[0]) ? 0 : 1);
                         q.addLast(new int[]{i + delta[1], j + delta[2]});
                     }
                 }
