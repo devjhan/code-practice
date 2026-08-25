@@ -1,4 +1,4 @@
-package leetcode.p684_redundant_connection.union_find;
+package leetcode.p0684_redundant_connection.union_find;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,14 +30,13 @@ class Solution {
     }
     public int[] findRedundantConnection(int[][] edges) {
         int[] parents = new int[edges.length];
-        int[] finalRedundantEdge = new int[2];
         Arrays.fill(parents, -1);
 
         for (int i = 0; i < edges.length; ++i) {
-            if (find(parents, edges[i][0] - 1) == find(parents, edges[i][1] - 1)) finalRedundantEdge = edges[i];
+            if (find(parents, edges[i][0] - 1) == find(parents, edges[i][1] - 1)) return edges[i];
             union(parents, edges[i][0] - 1, edges[i][1] - 1);
         }
-        return finalRedundantEdge;
+        return null;
     }
 }
 
