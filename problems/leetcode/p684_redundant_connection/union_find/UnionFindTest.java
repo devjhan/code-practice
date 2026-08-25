@@ -3,7 +3,6 @@ package leetcode.p684_redundant_connection.union_find;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.*;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -30,18 +29,15 @@ class Solution {
         }
     }
     public int[] findRedundantConnection(int[][] edges) {
-        int[] indexes = IntStream.range(0, edges.length).toArray();
+        int[] parents = new int[edges.length];
+        int[] finalRedundantEdge = new int[2];
+        Arrays.fill(parents, -1);
 
-        for (int i = edges.length - 1; i >= 0; --i) {
-            int[] parents = new int[edges.length];
-            Arrays.fill(parents, -1);
-
-            for (int j = edges.length - 1; j >= 0; --j) {
-                if (j != i) union(parents, edges[j][0] - 1, edges[j][1] - 1);
-            }
-            if (Arrays.stream(indexes).allMatch(idx -> find(parents, idx) == find(parents, 0))) return edges[i];
+        for (int i = 0; i < edges.length; ++i) {
+            if (find(parents, edges[i][0] - 1) == find(parents, edges[i][1] - 1)) finalRedundantEdge = edges[i];
+            union(parents, edges[i][0] - 1, edges[i][1] - 1);
         }
-        return null;
+        return finalRedundantEdge;
     }
 }
 
