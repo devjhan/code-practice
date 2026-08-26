@@ -32,7 +32,7 @@ class Solution {
         return Math.abs(x1 - x2) + Math.abs(y1 - y2);
     }
     public int minCostConnectPoints(int[][] points) {
-        int[][] edges = new int[points.length * (points.length - 1) / 2][6];
+        int[][] edges = new int[points.length * (points.length - 1) / 2][3];
         int edgesPtr = 0;
 
         int[] parents = new int[points.length];
@@ -42,15 +42,21 @@ class Solution {
 
         for (int i = 0; i < points.length; ++i) {
             for (int j = i + 1; j < points.length; ++j) {
-                edges[edgesPtr++] = new int[] {points[i][0], points[i][1], i, points[j][0], points[j][1], j};
+                edges[edgesPtr++] = new int[] {calcDist(points[i][0], points[i][1], points[j][0], points[j][1]), i, j};
             }
         }
-        Arrays.sort(edges, Comparator.comparingInt(edge -> calcDist(edge[0], edge[1], edge[3], edge[4])));
+        Arrays.sort(edges, Comparator.comparingInt(edge -> edge[0]));
+
+        int selectedVertices = 0;
 
         for (int[] edge: edges) {
-            if (find(parents, edge[2]) != find(parents, edge[5])) {
-                union(parents, edge[2], edge[5]);
-                cost += calcDist(edge[0], edge[1], edge[3], edge[4]);
+            if (selectedVertices == points.length - 1) {
+                break;
+            }
+            if (find(parents, edge[1]) != find(parents, edge[2])) {
+                ++selectedVertices;
+                union(parents, edge[1], edge[2]);
+                cost += edge[0];
             }
         }
         return cost;
