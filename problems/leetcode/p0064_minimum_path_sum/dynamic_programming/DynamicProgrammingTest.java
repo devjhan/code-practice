@@ -1,4 +1,4 @@
-package leetcode.p0064_minimum_path_sum.dynamaic_programming;
+package leetcode.p0064_minimum_path_sum.dynamic_programming;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
