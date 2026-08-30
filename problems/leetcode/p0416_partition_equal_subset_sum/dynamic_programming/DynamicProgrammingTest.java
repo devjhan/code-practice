@@ -18,18 +18,20 @@ class Solution {
         BitSet sumExists = new BitSet(target + 1);
 
         for (int i = 0; i < nums.length; ++i) {
-            BitSet deltas = new BitSet(target + 1);
+            boolean notChecked = false;
 
-            if (nums[i] < sumExists.size()) {
-                deltas.set(nums[i]);
+            if (nums[i] <= target) {
+                if (!sumExists.get(nums[i])) notChecked = true;
+                sumExists.set(nums[i]);
             }
 
-            for (int j = 1; j < sumExists.size(); ++j) {
-                if (sumExists.get(j) && nums[i] + j < sumExists.size()) {
-                    deltas.set(nums[i] + j);
+            for (int j = target; j > 0; --j) {
+                if (j == nums[i] && notChecked) continue;
+
+                if (sumExists.get(j) && nums[i] + j <= target) {
+                    sumExists.set(nums[i] + j);
                 }
             }
-            sumExists.or(deltas);
         }
         return sumExists.get(target);
     }
