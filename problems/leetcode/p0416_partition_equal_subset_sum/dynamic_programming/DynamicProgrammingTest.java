@@ -15,25 +15,16 @@ class Solution {
         if (sum % 2 != 0) return false;
 
         int target = sum / 2;
-        BitSet sumExists = new BitSet(target + 1);
+        boolean[] sumExists = new boolean[target + 1];
+        sumExists[0] = true;
 
-        for (int i = 0; i < nums.length; ++i) {
-            boolean notChecked = false;
-
-            if (nums[i] <= target) {
-                if (!sumExists.get(nums[i])) notChecked = true;
-                sumExists.set(nums[i]);
+        for (int num: nums) {
+            for (int s = target; s >= num; --s) {
+                sumExists[s] = sumExists[s] || sumExists[s - num];
             }
-
-            for (int j = target; j > 0; --j) {
-                if (j == nums[i] && notChecked) continue;
-
-                if (sumExists.get(j) && nums[i] + j <= target) {
-                    sumExists.set(nums[i] + j);
-                }
-            }
+            if (sumExists[target]) return true;
         }
-        return sumExists.get(target);
+        return false;
     }
 }
 
