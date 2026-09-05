@@ -49,8 +49,16 @@
     "use_new_terminal": false,
     "allow_concurrent_runs": true,
     "reveal": "always"
+  },
+  {
+    "label": "LeetCode: Commit & Push Current Problem",
+    "command": "python",
+    "args": ["scripts/commit_solution.py", "$ZED_FILE"],
+    "save": "current",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always"
   }
 ]
-
 
 
