@@ -1,31 +1,8 @@
-from typing import List, Optional
+from typing import Optional
 
 import pytest
 
-# Definition for singly-linked list.
-
-
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-
-def to_linked_list(values: List[int]) -> Optional[ListNode]:
-    dummy = ListNode()
-    curr = dummy
-    for value in values:
-        curr.next = ListNode(value)
-        curr = curr.next
-    return dummy.next
-
-
-def linked_list_to_list(head: Optional[ListNode]) -> List[int]:
-    values = []
-    while head:
-        values.append(head.val)
-        head = head.next
-    return values
+from leetcode.common import ListNode, linked_list_to_list, to_linked_list
 
 
 class Solution:

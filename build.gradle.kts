@@ -16,9 +16,14 @@ dependencies {
 }
 
 sourceSets {
+    main {
+        java {
+            srcDirs("common/java")
+        }
+    }
     test {
         java {
-            srcDirs("problems")
+            srcDirs("problems", "tests/java")
         }
     }
 }

@@ -1,0 +1,5 @@
+{
+  "extraPaths": ["common/python"],
+  "venvPath": ".",
+  "venv": ".venv"
+}
