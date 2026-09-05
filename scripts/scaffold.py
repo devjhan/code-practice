@@ -1,12 +1,80 @@
 #!/usr/bin/env python3
-import sys
-import os
+import ast
 import re
+import sys
 from pathlib import Path
 
-# Add scripts directory to path to import platform_env
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from platform_env import PlatformEnv
+try:
+    from .platform_env import PlatformEnv
+except ImportError:  # Direct script execution
+    from platform_env import PlatformEnv
+
+COMMON_TYPES = ("ListNode", "TreeNode")
+
+
+def detect_common_types(code: str) -> list[str]:
+    return [name for name in COMMON_TYPES if re.search(rf"\b{name}\b", code)]
+
+
+def remove_java_common_type_definitions(code: str) -> str:
+    """Remove pasted, top-level LeetCode node definitions from Java code."""
+    pattern = re.compile(
+        r"(?m)^[ \t]?(?:public\s+)?class\s+(?:ListNode|TreeNode)\b[^\{]*\{"
+    )
+    while match := pattern.search(code):
+        brace_start = code.find("{", match.start())
+        depth = 0
+        end = None
+        for index in range(brace_start, len(code)):
+            if code[index] == "{":
+                depth += 1
+            elif code[index] == "}":
+                depth -= 1
+                if depth == 0:
+                    end = index + 1
+                    break
+        if end is None:
+            break
+        code = code[: match.start()] + code[end:]
+    return code.strip()
+
+
+def remove_python_common_type_definitions(code: str) -> str:
+    """Remove pasted, top-level LeetCode node definitions from Python code."""
+    try:
+        tree = ast.parse(code)
+    except SyntaxError:
+        return code.strip()
+
+    ranges = [
+        (node.lineno, node.end_lineno)
+        for node in tree.body
+        if isinstance(node, ast.ClassDef) and node.name in COMMON_TYPES
+    ]
+    if not ranges:
+        return code.strip()
+
+    lines = code.splitlines(keepends=True)
+    for start, end in reversed(ranges):
+        del lines[start - 1 : end]
+    return "".join(lines).strip()
+
+
+def java_common_imports(code: str) -> str:
+    imports = [
+        f"import leetcode.common.{name};"
+        for name in detect_common_types(code)
+        if f"import leetcode.common.{name};" not in code
+    ]
+    return "\n".join(imports)
+
+
+def python_common_import(code: str) -> str:
+    names = detect_common_types(code)
+    if not names or "from leetcode.common import" in code:
+        return ""
+    return f"from leetcode.common import {', '.join(names)}"
+
 
 def parse_java_solution(code: str):
     method_pattern = re.compile(
@@ -43,6 +111,7 @@ def parse_java_solution(code: str):
         "solution_body": code.strip()
     }
 
+
 def generate_java_scaffold(file_path: Path, parsed: dict) -> str:
     package_name = PlatformEnv.calculate_java_package(file_path)
     class_name = PlatformEnv.to_pascal_case(file_path.stem)
@@ -51,7 +120,9 @@ def generate_java_scaffold(file_path: Path, parsed: dict) -> str:
     method_name = parsed["method_name"]
     params = parsed["params"]
     param_names = parsed["param_names"]
-    solution_body = parsed["solution_body"]
+    original_solution_body = parsed["solution_body"]
+    solution_body = remove_java_common_type_definitions(original_solution_body)
+    common_imports = java_common_imports(solution_body)
     
     if "class Solution" not in solution_body:
         default_ret = "0"
@@ -88,12 +159,13 @@ def generate_java_scaffold(file_path: Path, parsed: dict) -> str:
     test_params_list = list(params)
     test_params_list.append(f"{return_type} expected")
     test_params_str = ", ".join(test_params_list)
+    common_import_block = f"{common_imports}\n\n" if common_imports else ""
 
     return f"""package {package_name};
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.*;
+{common_import_block}import java.util.*;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -115,6 +187,7 @@ class {class_name} {{
     }}
 }}
 """
+
 
 def parse_python_solution(code: str):
     method_pattern = re.compile(
@@ -147,11 +220,14 @@ def parse_python_solution(code: str):
         "solution_body": code.strip()
     }
 
+
 def generate_python_scaffold(file_path: Path, parsed: dict) -> str:
     method_name = parsed["method_name"]
     params = parsed["params"]
     param_names = parsed["param_names"]
-    solution_body = parsed["solution_body"]
+    original_solution_body = parsed["solution_body"]
+    solution_body = remove_python_common_type_definitions(original_solution_body)
+    common_import = python_common_import(solution_body)
     
     if "class Solution" not in solution_body:
         ret_type_annot = f" -> {parsed['return_type']}" if parsed['return_type'] else ""
@@ -164,8 +240,9 @@ def generate_python_scaffold(file_path: Path, parsed: dict) -> str:
     test_param_names.append("expected")
     test_params_str = ", ".join(test_param_names)
     call_args_str = ", ".join(param_names)
+    common_import_block = f"{common_import}\n\n" if common_import else ""
 
-    return f"""import pytest
+    return f"""{common_import_block}import pytest
 
 
 {solution_body}
@@ -180,6 +257,7 @@ def generate_python_scaffold(file_path: Path, parsed: dict) -> str:
 def test_{method_name}({test_params_str}):
     assert Solution().{method_name}({call_args_str}) == expected
 """
+
 
 def main():
     if len(sys.argv) < 3:
