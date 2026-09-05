@@ -3,7 +3,6 @@ package leetcode.p0098_validate_binary_search_tree.binary_search_tree;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import leetcode.common.TreeNode;
-import java.util.*;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
