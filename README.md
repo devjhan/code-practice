@@ -57,6 +57,13 @@ Zed 에디터에서 `Cmd + Shift + R`을 누르고 LeetCode 태스크를 즉시 
 * **`LeetCode: Test All Java`**: Java 전체 테스트 실행 (`./gradlew test`)
 * **`LeetCode: Test All Python`**: Python 전체 테스트 실행 (`.venv/bin/pytest -v`)
 
+#### 3) 풀이 커밋 태스크
+* **`LeetCode: Commit & Push Current Problem`**:
+  * 현재 파일이 속한 문제 폴더만 stage합니다.
+  * 문제 경로로부터 `feat(0098-validate-binary-search-tree): solve problem` 형식의 메시지를 생성합니다.
+  * commit 성공 후 현재 브랜치를 push하며, upstream이 없다면 `origin`에 자동 설정합니다.
+  * 현재 문제 밖의 변경이 이미 stage되어 있으면 혼합 커밋을 방지하기 위해 중단합니다.
+
 ## 문제 추가 규칙 (0-Step Setup)
 
 문제는 `problems/<platform>/<p번호_이름>/` 아래에 둡니다.
@@ -67,8 +74,8 @@ problems/
     p0001_two_sum/
       hash_table/
         TwoSumTest.java
-      test_hashtable.py
-      test_bruteforce.py
+      hashtable_test.py
+      bruteforce_test.py
     p0215_kth_largest_element_in_an_array/
       min_heap/
         MinHeapTest.java
@@ -76,11 +83,48 @@ problems/
         QuickSelectTest.java
 ```
 
-### 1. Zero-Step LSP 지원
+### 1. 문제 파일 생성 CLI
+
+문제 번호, 문제명, 전략명, 언어를 전달하면 필요한 디렉터리와 빈 파일을 한 번에 생성합니다.
+
+```bash
+python scripts/create_problem.py 98 "validate binary search tree" binary_search_tree java
+python scripts/create_problem.py 2 "add two numbers" linked_list python
+```
+
+생성 경로는 다음 규칙을 따릅니다.
+
+```text
+# Java
+problems/leetcode/p0098_validate_binary_search_tree/binary_search_tree/BinarySearchTreeTest.java
+
+# Python
+problems/leetcode/p0002_add_two_numbers/linked_list_test.py
+```
+
+인자를 생략하면 누락된 값을 터미널에서 입력받습니다. 기존 파일은 덮어쓰지 않습니다.
+
+### 2. 공용 LeetCode 타입
+
+`TreeNode`와 `ListNode`는 Python과 Java에서 `leetcode.common`을 통해 공유합니다.
+
+```python
+from leetcode.common import ListNode, TreeNode
+from leetcode.common import linked_list_to_list, to_linked_list
+```
+
+```java
+import leetcode.common.ListNode;
+import leetcode.common.TreeNode;
+```
+
+스캐폴딩 Task는 solution에서 이 타입들을 감지해 import를 자동으로 추가하고, 붙여넣은 로컬 타입 정의는 공용 타입으로 교체합니다.
+
+### 3. Zero-Step LSP 지원
 * 별도의 `build.gradle.kts` 생성, `settings.gradle.kts` 수정, Gradle 동기화 절차가 **전혀 필요 없습니다**.
 * 파일을 생성하자마자 Zed LSP(JDTLS / Basedpyright)가 즉시 구문 강조, 타입 힌트, 자동완성을 제공합니다.
 
-### 2. 보조 코드 스니펫 (Zed Snippets)
+### 4. 보조 코드 스니펫 (Zed Snippets)
 
 * **macOS / Linux**:
   ```bash
@@ -97,7 +141,7 @@ problems/
 * **`algo:assert-order`**: `assertThat(actual).containsExactlyInAnyOrder(expected);` (순서 무관 배열/컬렉션 검증)
 * **`algo:assert-elements`**: `assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);` (순서 무관 중첩 컬렉션 검증)
 
-### 3. Java 풀이 전략 폴더 및 패키지 규칙
+### 5. 풀이 전략 및 파일명 규칙
 * **단일/복수 풀이 공통 규칙**: 모든 Java 풀이는 항상 문제 폴더 아래의 `{전략_이름_폴더}`에 배치합니다:
   ```text
   problems/leetcode/p0001_two_sum/hash_table/TwoSumTest.java
@@ -108,6 +152,6 @@ problems/
   ```
 * 각 전략 파일은 독립된 최상위 `class Solution`을 가질 수 있으며 패키지 네임스페이스 격리로 인해 충돌하지 않습니다.
 * 단일 파일 테스트 실행 시 FQCN(전체 패키지명)으로 전달되어, 동일한 테스트 클래스명을 가진 다른 문제와 완벽히 격리되어 실행됩니다.
-
+* Python 풀이는 문제 폴더 바로 아래에 `{전략_이름}_test.py` 형식으로 배치합니다.
 
 
