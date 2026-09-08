@@ -31,15 +31,4 @@ class Solution {
 }
 
 class BinaryTreeTest {
-    static Stream<Arguments> cases() {
-        return Stream.of(
-            Arguments.of(/* args, expected */)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("cases")
-    void flatten(TreeNode root) {
-        assertThat(new Solution().flatten(root));
-    }
 }
