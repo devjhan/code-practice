@@ -1,6 +1,7 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
+package leetcode.p0173_binary_search_tree_iterator.binary_search_tree;
 
+import java.util.Deque;
+import java.util.ArrayDeque;
 import leetcode.common.TreeNode;
 
 class BSTIterator {
