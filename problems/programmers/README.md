@@ -11,10 +11,13 @@
   - `p17683_just_that_song/simulation/JustThatSongTest.java`
 - [기둥과 보 설치 (60061)](https://school.programmers.co.kr/learn/courses/30/lessons/60061)
   - `p60061_pillar_and_beam_installation/simulation/PillarAndBeamInstallationTest.java`
+- [표 편집 (81303)](https://school.programmers.co.kr/learn/courses/30/lessons/81303)
+  - `p81303_table_editing/bitset_stack/TableEditingTest.java`
 
 ## Run a single Java test
 
 ```bash
 ./gradlew test --tests 'programmers.p17683_just_that_song.simulation.JustThatSongTest'
 ./gradlew test --tests 'programmers.p60061_pillar_and_beam_installation.simulation.PillarAndBeamInstallationTest'
+./gradlew test --tests 'programmers.p81303_table_editing.bitset_stack.TableEditingTest'
 ```
