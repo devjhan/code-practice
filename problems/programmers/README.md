@@ -13,6 +13,8 @@
   - `p60061_pillar_and_beam_installation/simulation/PillarAndBeamInstallationTest.java`
 - [표 편집 (81303)](https://school.programmers.co.kr/learn/courses/30/lessons/81303)
   - `p81303_table_editing/bitset_stack/TableEditingTest.java`
+- [추석 트래픽 (17676)](https://school.programmers.co.kr/learn/courses/30/lessons/17676)
+  - `p17676_thanksgiving_traffic/interval_overlap/ThanksgivingTrafficTest.java`
 
 ## Run a single Java test
 
@@ -20,4 +22,5 @@
 ./gradlew test --tests 'programmers.p17683_just_that_song.simulation.JustThatSongTest'
 ./gradlew test --tests 'programmers.p60061_pillar_and_beam_installation.simulation.PillarAndBeamInstallationTest'
 ./gradlew test --tests 'programmers.p81303_table_editing.bitset_stack.TableEditingTest'
+./gradlew test --tests 'programmers.p17676_thanksgiving_traffic.interval_overlap.ThanksgivingTrafficTest'
 ```
