@@ -16,6 +16,9 @@
 - [추석 트래픽 (17676)](https://school.programmers.co.kr/learn/courses/30/lessons/17676)
   - `p17676_thanksgiving_traffic/interval_overlap/ThanksgivingTrafficTest.java`
 
+- [매칭 점수 (42893)](https://school.programmers.co.kr/learn/courses/30/lessons/42893)
+  - `p42893_matching_score/link_score/MatchingScoreTest.java`
+
 ## Run a single Java test
 
 ```bash
@@ -23,4 +26,5 @@
 ./gradlew test --tests 'programmers.p60061_pillar_and_beam_installation.simulation.PillarAndBeamInstallationTest'
 ./gradlew test --tests 'programmers.p81303_table_editing.bitset_stack.TableEditingTest'
 ./gradlew test --tests 'programmers.p17676_thanksgiving_traffic.interval_overlap.ThanksgivingTrafficTest'
+./gradlew test --tests 'programmers.p42893_matching_score.link_score.MatchingScoreTest'
 ```
